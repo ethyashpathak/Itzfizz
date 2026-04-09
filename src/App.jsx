@@ -16,14 +16,14 @@ export default function App() {
   const mainRef = useRef(null);
   const headlineRef = useRef(null);
 
-  // Custom Cursor Logic
+
   useEffect(() => {
     const cursorDot = document.querySelector('.cursor-dot');
     const cursorOutline = document.querySelector('.cursor-outline');
 
     if (!cursorDot || !cursorOutline) return;
 
-    // Use a QuickTo setter for high performance cursor tracking
+
     const xDotSetter = gsap.quickSetter(cursorDot, "x", "px");
     const yDotSetter = gsap.quickSetter(cursorDot, "y", "px");
     const xOutlineSetter = gsap.quickTo(cursorOutline, "x", { duration: 0.4, ease: "power3.out" });
@@ -38,7 +38,7 @@ export default function App() {
 
     window.addEventListener('mousemove', moveCursor);
 
-    // Add CSS class on hover over interactive elements
+
     const addHover = () => document.body.classList.add('cursor-hover');
     const removeHover = () => document.body.classList.remove('cursor-hover');
 
@@ -57,10 +57,10 @@ export default function App() {
     };
   }, []);
 
-  // Main Scroll & Parallax Animations
+
   useLayoutEffect(() => {
     const ctx = gsap.context(() => {
-      /* ── INTRO : letters stagger in on load ── */
+
       gsap.fromTo(
         '.letter',
         { y: 100, opacity: 0 },
@@ -86,7 +86,7 @@ export default function App() {
         { opacity: 1, duration: 0.6, delay: 1.5 }
       );
 
-      /* ── SCROLL ANIMATION ── */
+
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: '.hero-wrapper',
@@ -98,27 +98,27 @@ export default function App() {
         },
       });
 
-      // Part 1: Fade out headline while scaling it up slightly
+
       tl.to('.headline', { scale: 1.1, opacity: 0, duration: 2 }, 0);
       tl.to('.hero-sub', { opacity: 0, y: -20, duration: 1 }, 0);
       tl.to('.scroll-hint', { opacity: 0, duration: 0.5 }, 0);
       tl.to('.hero-glow', { scale: 3, opacity: 0, duration: 2 }, 0);
 
-      // Part 2: Clip-path reveal of the stunning AI background
+
       tl.fromTo('.hero-reveal',
         { clipPath: 'circle(0% at 50% 50%)' },
         { clipPath: 'circle(150% at 50% 50%)', duration: 4, ease: 'power2.inOut' },
         1
       );
 
-      // Part 3: Fade in reveal text inside the background
+
       tl.fromTo('.reveal-content',
         { y: 50, opacity: 0 },
         { y: 0, opacity: 1, duration: 2, ease: 'power2.out' },
         3
       );
 
-      /* ── STATS : sleek staggered entrance ── */
+
       gsap.fromTo('.stat-card',
         { y: 60, opacity: 0 },
         {
@@ -135,7 +135,7 @@ export default function App() {
         }
       );
 
-      /* ── COUNTERS ── */
+
       gsap.utils.toArray('.counter-num').forEach((el) => {
         const end = parseInt(el.dataset.end, 10);
         const suffix = el.dataset.suffix || '';
@@ -156,7 +156,7 @@ export default function App() {
         });
       });
 
-      /* ── STAT CARD HOVER PARALLAX (Mouse tracking for gradient) ── */
+
       const cards = document.querySelectorAll('.stat-card');
       cards.forEach((card) => {
         card.addEventListener('mousemove', (e) => {
@@ -168,7 +168,7 @@ export default function App() {
         });
       });
 
-      /* ── FOOTER ── */
+
       gsap.fromTo('.footer-inner',
         { y: 40, opacity: 0 },
         {
@@ -188,13 +188,13 @@ export default function App() {
     return () => ctx.revert();
   }, []);
 
-  // Parallax tracking for the main headline
+
   const handleHeroMouseMove = (e) => {
     if (!headlineRef.current) return;
     const { clientX, clientY } = e;
     const { innerWidth, innerHeight } = window;
 
-    // Calculate normalized values (-1 to 1)
+
     const xPos = (clientX / innerWidth - 0.5) * 2;
     const yPos = (clientY / innerHeight - 0.5) * 2;
 
@@ -224,14 +224,14 @@ export default function App() {
 
   return (
     <div ref={mainRef} className="main relative bg-[#060606]">
-      {/* ─── CUSTOM CURSOR ─── */}
+
       <div className="cursor-dot" />
       <div className="cursor-outline" />
 
-      {/* ─── NOISE OVERLAY ─── */}
+
       <div className="noise-overlay" />
 
-      {/* ─── NAV ─── */}
+
       <nav className="nav">
         <div className="logo">● ITZFIZZ</div>
         <div className="nav-right">
@@ -241,7 +241,7 @@ export default function App() {
         </div>
       </nav>
 
-      {/* ─── HERO SEC ─── */}
+
       <section
         className="hero-wrapper"
         onMouseMove={handleHeroMouseMove}
@@ -266,7 +266,7 @@ export default function App() {
           </div>
         </div>
 
-        {/* ── REVEAL SEC ── */}
+
         <div className="hero-reveal">
           <div className="reveal-bg" />
           <div className="reveal-content">
@@ -281,7 +281,7 @@ export default function App() {
         </div>
       </section>
 
-      {/* ─── STATS ─── */}
+
       <section className="stats" id="stats">
         <p className="section-label">OUR IMPACT</p>
         <h2 className="section-title">Numbers That Speak</h2>
@@ -306,7 +306,7 @@ export default function App() {
         </div>
       </section>
 
-      {/* ─── FOOTER ─── */}
+
       <footer className="footer" id="footer">
         <div className="footer-inner">
           <h2 className="footer-title">

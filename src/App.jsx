@@ -15,6 +15,7 @@ const STATS = [
 export default function App() {
   const mainRef = useRef(null);
   const headlineRef = useRef(null);
+  const trackRef = useRef(null);
 
 
   useEffect(() => {
@@ -117,7 +118,19 @@ export default function App() {
         { y: 0, opacity: 1, duration: 2, ease: 'power2.out' },
         3
       );
-
+      // Gallery Horizontal Scroll
+      const panels = gsap.utils.toArray('.gallery-panel');
+      gsap.to(panels, {
+        xPercent: -100 * (panels.length - 1),
+        ease: 'none',
+        scrollTrigger: {
+          trigger: '.gallery-wrapper',
+          pin: true,
+          scrub: 1,
+          snap: 1 / (panels.length - 1),
+          end: () => '+=' + trackRef.current.offsetWidth,
+        },
+      });
 
       gsap.fromTo('.stat-card',
         { y: 60, opacity: 0 },
@@ -281,6 +294,32 @@ export default function App() {
         </div>
       </section>
 
+      {/* ─── GALLERY SEC ─── */}
+      <section className="gallery-wrapper">
+        <div className="gallery-track" ref={trackRef}>
+          <div className="gallery-panel">
+            <div className="panel-img" style={{ backgroundImage: 'url(/abstract_fluid_bg.png)' }} />
+            <div className="panel-content">
+              <h2 className="panel-title">Project Infinity</h2>
+              <p className="panel-desc">A seamless blend of 3D geometry and motion.</p>
+            </div>
+          </div>
+          <div className="gallery-panel">
+            <div className="panel-img" style={{ backgroundImage: 'url(/project1.png)' }} />
+            <div className="panel-content">
+              <h2 className="panel-title">Digital Prism</h2>
+              <p className="panel-desc">Refracting modern aesthetics into pure visual elegance.</p>
+            </div>
+          </div>
+          <div className="gallery-panel">
+            <div className="panel-img" style={{ backgroundImage: 'url(/project2.png)' }} />
+            <div className="panel-content">
+              <h2 className="panel-title">Neon Flow</h2>
+              <p className="panel-desc">Intertwining rings of light mapping the digital frontier.</p>
+            </div>
+          </div>
+        </div>
+      </section>
 
       <section className="stats" id="stats">
         <p className="section-label">OUR IMPACT</p>
